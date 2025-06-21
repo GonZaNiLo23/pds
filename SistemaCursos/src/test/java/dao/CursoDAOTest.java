@@ -44,8 +44,10 @@ class CursoDAOTest {
 		em.createNativeQuery("DELETE FROM progreso_flashcards").executeUpdate(); // 1º tabla puente
 		em.createQuery("DELETE FROM ProgresoEstudiante").executeUpdate();       // 2º tabla padre
 		em.createQuery("DELETE FROM Inscripcion").executeUpdate();
-		em.createQuery("DELETE FROM Curso").executeUpdate();
-		em.createQuery("DELETE FROM Estudiante").executeUpdate();
+		em.createNativeQuery("DELETE FROM flashcard_opciones").executeUpdate(); // 3º opciones antes que flashcards (nativa)
+		em.createNativeQuery("DELETE FROM flashcards").executeUpdate();         // 4º flashcards antes que cursos (nativa)
+		em.createNativeQuery("DELETE FROM cursos").executeUpdate();             // 5º cursos antes que estudiantes (nativa)
+		em.createNativeQuery("DELETE FROM estudiantes").executeUpdate();        // 6º estudiantes (nativa)
 		em.getTransaction().commit();
 		/* --------------------------------------------------------- */
 	}
