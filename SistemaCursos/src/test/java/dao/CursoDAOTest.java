@@ -23,24 +23,22 @@ class CursoDAOTest {
 
 	/* ───────── infraestructura ───────── */
 
-	private EntityManagerFactory emf;
+	private static EntityManagerFactory emf;
 	private EntityManager em;
 	private CursoDAO cursoDAO;
-
-	private Estudiante creador;
-	private Estudiante otro;
 
 	/* ───────── lifecycle ───────── */
 
 	@BeforeAll
 	void init() {
 		emf = Persistence.createEntityManagerFactory("flashcards-jpa");
-		em  = emf.createEntityManager();
 		cursoDAO = new CursoDAO();
 	}
 
 	@BeforeEach
 	void setUp() {
+		em = emf.createEntityManager();
+		
 		/* ---------- limpieza ordenada para no violar FK ---------- */
 		em.getTransaction().begin();
 		em.createNativeQuery("DELETE FROM progreso_flashcards").executeUpdate(); // 1º tabla puente
@@ -50,21 +48,12 @@ class CursoDAOTest {
 		em.createQuery("DELETE FROM Estudiante").executeUpdate();
 		em.getTransaction().commit();
 		/* --------------------------------------------------------- */
-
-		/* ---------- datos de prueba ---------- */
-		em.getTransaction().begin();
-		String ts = String.valueOf(System.nanoTime());            // emails únicos
-		creador = new Estudiante("Ana2",  "ana2+"  + ts + "@mail.com", "123");
-		otro    = new Estudiante("Luis2", "luis2+" + ts + "@mail.com", "456");
-		em.persist(creador);
-		em.persist(otro);
-		em.getTransaction().commit();
 	}
 
 	@AfterAll
 	void tearDown() {
-		if (em.isOpen())  em.close();
-		if (emf.isOpen()) emf.close();
+		em.close();
+		emf.close();
 		CursoDAO.cerrarFactory();
 	}
 
@@ -72,7 +61,12 @@ class CursoDAOTest {
 
 	@Test
 	void testGuardarCurso() {
-		Curso curso = new Curso("Curso A", "Desc A",
+		// Crear estudiante único para este test
+		String testId = String.valueOf(System.nanoTime());
+		Estudiante creador = crearEstudiante("Ana" + testId, "ana" + testId);
+		
+		String nombreCurso = "Curso A " + testId;
+		Curso curso = new Curso(nombreCurso, "Desc A " + testId,
 				Curso.TipoEstrategia.SECUENCIAL, new HashSet<>(), creador, true);
 
 		cursoDAO.guardar(curso);
@@ -81,13 +75,17 @@ class CursoDAOTest {
 				em.createQuery("SELECT c FROM Curso c", Curso.class).getResultList();
 
 		assertEquals(1, resultados.size());
-		assertEquals("Curso A", resultados.get(0).getNombre());
+		assertEquals(nombreCurso, resultados.get(0).getNombre());
 	}
 
 	@Test
 	void testBuscarTodos() {
-		crearCurso("Curso A");
-		crearCurso("Curso B");
+		// Crear estudiante único para este test
+		String testId = String.valueOf(System.nanoTime());
+		Estudiante creador = crearEstudiante("Luis" + testId, "luis" + testId);
+		
+		crearCurso("Curso A " + testId, creador);
+		crearCurso("Curso B " + testId, creador);
 
 		List<Curso> cursos = cursoDAO.buscarTodos();
 		assertEquals(2, cursos.size());
@@ -95,9 +93,14 @@ class CursoDAOTest {
 
 	@Test
 	void testBuscarCursosDelUsuario() {
-		crearCurso("Curso Propio");
-		Curso ajeno = crearCurso("Curso Ajeno", otro);
-		inscribirEstudiante(ajeno, creador);          // Ana se inscribe en curso de Luis
+		// Crear estudiantes únicos para este test
+		String testId = String.valueOf(System.nanoTime());
+		Estudiante creador = crearEstudiante("Maria" + testId, "maria" + testId);
+		Estudiante otro = crearEstudiante("Pedro" + testId, "pedro" + testId);
+		
+		crearCurso("Curso Propio " + testId, creador);
+		Curso ajeno = crearCurso("Curso Ajeno " + testId, otro);
+		inscribirEstudiante(ajeno, creador);          // Maria se inscribe en curso de Pedro
 
 		List<Curso> cursos = cursoDAO.buscarCursosDelUsuario(creador);
 		assertEquals(2, cursos.size());
@@ -105,10 +108,15 @@ class CursoDAOTest {
 
 	@Test
 	void testBuscarCursosPublicosDisponibles() {
-		Curso publico  = crearCurso("Curso Público",  otro, true);
-		Curso privado  = crearCurso("Curso Privado",  otro, false);
-		inscribirEstudiante(publico, creador);        // Ana ya inscrita en “publico”
-		Curso otroPub  = crearCurso("Curso No Inscrito", otro, true);
+		// Crear estudiantes únicos para este test
+		String testId = String.valueOf(System.nanoTime());
+		Estudiante creador = crearEstudiante("Carlos" + testId, "carlos" + testId);
+		Estudiante otro = crearEstudiante("Sofia" + testId, "sofia" + testId);
+		
+		Curso publico  = crearCurso("Curso Público " + testId, otro, true);
+		Curso privado  = crearCurso("Curso Privado " + testId, otro, false);
+		inscribirEstudiante(publico, creador);        // Carlos ya inscrito en "publico"
+		Curso otroPub  = crearCurso("Curso No Inscrito " + testId, otro, true);
 
 		List<Curso> disponibles = cursoDAO.buscarCursosPublicosDisponibles(creador);
 
@@ -122,8 +130,13 @@ class CursoDAOTest {
 
 	/* ───────── helpers ───────── */
 
-	private Curso crearCurso(String nombre) {
-		return crearCurso(nombre, creador, true);
+	private Estudiante crearEstudiante(String nombre, String emailPrefix) {
+		em.getTransaction().begin();
+		String emailUnico = emailPrefix + "+" + System.nanoTime() + "@correo.com";
+		Estudiante estudiante = new Estudiante(nombre, emailUnico, "1234");
+		em.persist(estudiante);
+		em.getTransaction().commit();
+		return estudiante;
 	}
 
 	private Curso crearCurso(String nombre, Estudiante autor) {
