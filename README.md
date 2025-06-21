@@ -15,7 +15,7 @@ la memorización progresiva y el seguimiento del progreso del estudiante.
 | **Felipe Antonio Molina Ayala** | G 2.2 |
 | **Gonzalo Nicolás López** | G 2.2 |
 
-**Profesor responsable:** *[nombre del profesor]*
+**Profesor responsable:** *Antonio López Martínez-Carrasco*
 
 ---
 
