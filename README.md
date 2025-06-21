@@ -21,7 +21,7 @@ la memorización progresiva y el seguimiento del progreso del estudiante.
 
 ## Documentación del análisis
 
-* 📄 [Casos de uso](docs/casos-de-uso.pdf)  
+* 📄 [Casos de uso](docs/casos-de-uso.md)  
 * 🖼️ [Modelo de dominio](docs/modelo-dominio.png)
 
 ---
