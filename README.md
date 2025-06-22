@@ -1,13 +1,16 @@
 # Flashcards App – PROCESOS DE DESARROLLO SOFTWARE
 
-Aplicación de escritorio en **Java 17 (Swing + Hibernate)** para crear cursos de
-flashcards y practicarlos mediante diferentes **estrategias de aprendizaje**  
-(secuencial, aleatoria y repetición con espaciamiento). El objetivo es facilitar
-la memorización progresiva y el seguimiento del progreso del estudiante.
+## 📚 Descripción del Proyecto
+
+**Flashcards App** es una aplicación de escritorio de aprendizaje interactivo diseñada para permitir a los usuarios crear, gestionar y practicar cursos de flashcards de manera eficiente y personalizada. Los usuarios pueden registrarse como **Estudiantes** para acceder y practicar cursos, mientras que también pueden crear sus propios cursos y flashcards. La aplicación ofrece múltiples estrategias de aprendizaje configurables (secuencial, aleatorio y repetición espaciada), seguimiento detallado de progreso y un sistema de gamificación mediante rankings.
+
+## 🎯 Objetivo
+
+El objetivo principal es proporcionar una plataforma robusta y escalable que facilite el proceso de memorización y aprendizaje mediante flashcards, con un enfoque en la personalización de la experiencia educativa. La aplicación busca optimizar la retención de conocimientos a través de técnicas científicamente respaldadas como la repetición espaciada, mientras fomenta la motivación mediante elementos de gamificación y competencia saludable entre usuarios.
 
 ---
 
-## Integrantes del grupo
+## 👥 Integrantes del grupo
 
 | Alumno | Grupo |
 | ------ | ----- |
@@ -15,42 +18,51 @@ la memorización progresiva y el seguimiento del progreso del estudiante.
 | **Felipe Antonio Molina Ayala** | G 2.2 |
 | **Gonzalo Nicolás López** | G 2.2 |
 
-**Profesor responsable:** *Antonio López Martínez-Carrasco*
+**👨‍🏫 Profesor responsable:** *Antonio López Martínez-Carrasco*
 
 ---
 
-## Documentación del análisis
+## 📋 Documentación del análisis
 
 * 📄 [Casos de uso](docs/casos-de-uso.md)  
 * 🖼️ [Modelo de dominio](docs/modelo-dominio.png)
 * 📚 [Algoritmo](SistemaCursos/)
+* 📋 [Documentación](docs/documentacion/)
+* 🎯 [README](README.md)
 
 ---
 
-## Funcionalidad implementada
+## ⚙️ Funcionalidad implementada
+
+### Funcionalidades principales
 
 | Módulo | Descripción |
 | ------ | ----------- |
-| **Autenticación** | Registro y login de estudiantes con validación de datos |
-| **Gestión de cursos** | Crear, buscar, listar e inscribirse a cursos de flashcards |
-| **Flashcards** | CRUD completo de tarjetas con pregunta y respuesta |
-| **Estrategias de práctica** | Secuencial, aleatoria y repetición (espaciada) |
-| **Barra de progreso** | Avanza según la estrategia seleccionada |
-| **Ranking global** | Tabla de clasificación por porcentaje de aciertos |
-| **Estadísticas** | Ventana de estadísticas personales y globales |
-| **Funcionalidad extra** | Algoritmo de repetición espaciada, importación/exportación CSV de flashcards, tema oscuro |
+| **🔐 Autenticación** | Sistema completo de registro y login con validación de datos |
+| **📚 Gestión de cursos** | Crear, buscar, listar e inscribirse a cursos de flashcards |
+| **🃏 Flashcards** | CRUD completo de tarjetas con pregunta y respuesta |
+| **🎲 Estrategias de práctica** | Tres modalidades: secuencial, aleatoria y repetición espaciada |
+| **📊 Barra de progreso** | Indicador visual que avanza según la estrategia seleccionada |
+| **📈 Estadísticas** | Panel completo de estadísticas personales y globales |
+
+### 🌟 Funcionalidades extra
+
+| Característica | Descripción |
+| -------------- | ----------- |
+| **🏆 Ranking global de usuarios** | Sistema de clasificación por curso que muestra el porcentaje de aciertos de cada estudiante |
 
 ---
 
-## Requisitos del sistema
+## 💻 Requisitos del sistema
 
 - **Java 17** o superior
 - **Maven 3.6+** para gestión de dependencias
 - **Base de datos compatible con H2** (incluida en el proyecto)
+- **Sistema operativo**: Windows, macOS o Linux
 
 ---
 
-## Cómo ejecutar la aplicación
+## 🚀 Cómo ejecutar la aplicación
 
 ### 1. Clonar el repositorio
 
@@ -61,19 +73,19 @@ cd .\pds\SistemaCursos\
 
 ### 2. Configuración del proyecto
 
-- Abrir el proyecto en tu IDE favorito (IntelliJ IDEA, Eclipse, NetBeans, etc.)
-- Asegurarse de que el proyecto esté configurado con Java 17 o superior
-- El IDE debería reconocer automáticamente el proyecto Maven y descargar las dependencias
+1. **Abrir el proyecto** en tu IDE favorito (IntelliJ IDEA, Eclipse, NetBeans, etc.)
+2. **Verificar Java 17**: Asegúrate de que el proyecto esté configurado con Java 17 o superior
+3. **Dependencias Maven**: El IDE debería reconocer automáticamente el proyecto Maven y descargar las dependencias necesarias
 
 ### 3. Ejecutar la aplicación
 
-- Localizar la clase principal `Main.java`
-- Hacer clic derecho → "Run Main.main()" (o equivalente según el IDE)
-- La aplicación se iniciará con la ventana de login
+1. **Localizar la clase principal**: Busca `Main.java` en el directorio `src/main/java/app/`
+2. **Ejecutar**: Hacer clic derecho → "Run Main.main()" (o equivalente según tu IDE)
+3. **Inicio**: La aplicación se iniciará mostrando la ventana de login
 
-> **Nota**: La primera ejecución creará automáticamente la base de datos H2 como archivo `flashcardsdb.mv.db` en el directorio raíz del proyecto. En este caso ya está creada con cursos de ejemplo.
+> **📝 Nota importante**: En la primera ejecución, la aplicación creará automáticamente la base de datos H2 como archivo `flashcardsdb.mv.db` en el directorio raíz del proyecto. El proyecto ya incluye una base de datos con cursos de ejemplo para facilitar las pruebas.
 
-## Estructura del proyecto
+## 📁 Estructura del proyecto
 
 ```
 pds/
@@ -96,3 +108,13 @@ pds/
 │   └── pom.xml                         # Configuración de Maven
 └── docs/                               # Documentación del proyecto
 ```
+## 🎮 Características destacadas del ranking
+
+El **sistema de ranking por curso** es una funcionalidad extra:
+
+- **📊 Clasificación automática**: Ordena automáticamente a los estudiantes por porcentaje de aciertos
+- **🔄 Actualización en tiempo real**: Se actualiza después de cada sesión de práctica
+- **🎯 Motivación competitiva**: Fomenta la participación activa y el esfuerzo continuo
+- **📈 Progreso visible**: Permite a los estudiantes ver su evolución respecto a otros participantes
+- **🏅 Reconocimiento**: Destaca a los mejores estudiantes de cada curso
+
