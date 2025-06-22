@@ -27,7 +27,7 @@ El objetivo principal es proporcionar una plataforma robusta y escalable que fac
 * 📄 [Casos de uso](docs/casos-de-uso.md)  
 * 🖼️ [Modelo de dominio](docs/modelo-dominio.png)
 * 📚 [Algoritmo](SistemaCursos/)
-* 📋 [Documentación](docs/documentacion/)
+* 📋 [Documentación](Documentacion_ Markdown/)
 * 🎯 [README](README.md)
 
 ---
