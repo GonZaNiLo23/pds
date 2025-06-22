@@ -106,7 +106,8 @@ pds/
 │   │       └── models/
 │   ├── flashcardsdb.mv.db              # Base de datos H2 (generada automáticamente)
 │   └── pom.xml                         # Configuración de Maven
-└── docs/                               # Documentación del proyecto
+├── Documentacion_ Markdown             # Documentación del proyecto
+└── docs/                               # Casos de uso y modelado del dominio 
 ```
 ## 🎮 Características destacadas del ranking
 
